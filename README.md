@@ -1,3 +1,9 @@
+> **SharkParty** is the Deadfin organization's tvOS fork of Swiftfin. This repository
+> starts from upstream Swiftfin commit `7d778734a9dce3e37b593c3c54f4dfb5a140e28b`.
+> See the [SharkParty development plan](Documentation/sharkparty-plan.md) for the
+> fork scope, build baseline, and first playback tests. Original Swiftfin history,
+> credits, and the [MPL-2.0 license](LICENSE.md) are retained.
+
 <div align="center">
   <img alt="Swiftfin" src="./Resources/primary-wide.svg">
 
