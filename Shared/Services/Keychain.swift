@@ -14,6 +14,10 @@ extension Container {
 
     // TODO: take a look at all security options
     var keychainService: Factory<KeychainSwift> {
+        #if os(tvOS)
+        self { KeychainSwift(keyPrefix: "org.deadfin.SharkParty.") }.singleton
+        #else
         self { KeychainSwift() }.singleton
+        #endif
     }
 }

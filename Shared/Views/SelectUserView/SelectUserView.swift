@@ -269,7 +269,7 @@ struct SelectUserView: View {
                 ProgressView()
             case .content:
                 if viewModel.servers.isEmpty {
-                    ConnectToJellyfinView()
+                    ConnectToServerIntroView()
                 } else {
                     contentView
                 }
@@ -284,7 +284,7 @@ struct SelectUserView: View {
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
-                Image(.jellyfinBlobBlue)
+                Image(uiImage: .appBrand)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: UIDevice.isTV ? 100 : 30)

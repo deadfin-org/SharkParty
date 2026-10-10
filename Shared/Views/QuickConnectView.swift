@@ -25,7 +25,7 @@ struct QuickConnectView: View {
     private func pollingView(code: String) -> some View {
         VStack(spacing: 20) {
             BulletedList(spacing: 16) {
-                Text(L10n.quickConnectStep1)
+                Text(AppBrandCopy.quickConnectStep1)
 
                 Text(L10n.quickConnectStep2)
 

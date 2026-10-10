@@ -30,7 +30,7 @@ struct SettingsView: View {
     // MARK: - Body
 
     var body: some View {
-        Form(image: .jellyfinBlobBlue) {
+        Form(uiImage: .appBrand) {
             serverSection
             customizeSection
             diagnosticsSection

@@ -57,9 +57,9 @@ struct AppSettingsView: View {
     }
 
     var body: some View {
-        Form(image: .jellyfinBlobBlue) {
+        Form(uiImage: .appBrand) {
 
-            Section(L10n.swiftfin) {
+            Section(Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? L10n.swiftfin) {
                 ChevronButton(L10n.aboutApp) {
                     router.route(to: .aboutApp)
                 }
@@ -67,9 +67,11 @@ struct AppSettingsView: View {
 
             Section(L10n.customize) {
 
+                #if os(iOS)
                 ChevronButton(L10n.appIcon) {
                     router.route(to: .appIconSelector)
                 }
+                #endif
 
                 #if os(iOS)
                 if !selectUserUseSplashscreen {
@@ -113,7 +115,7 @@ struct AppSettingsView: View {
             Section {
                 Toggle(L10n.signoutClose, isOn: $signOutOnClose)
             } footer: {
-                Text(L10n.signoutCloseFooter)
+                Text(AppBrandCopy.signoutCloseFooter)
             }
 
             Section {
@@ -123,7 +125,7 @@ struct AppSettingsView: View {
                     HourMinutePicker(title: L10n.duration, interval: $backgroundSignOutInterval)
                 }
             } footer: {
-                Text(L10n.signoutBackgroundFooter)
+                Text(AppBrandCopy.signoutBackgroundFooter)
             }
 
             ChevronButton(L10n.logs) {

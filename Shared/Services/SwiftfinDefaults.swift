@@ -25,7 +25,7 @@ extension UserDefaults {
     // MARK: App
 
     /// Settings that should apply to the app
-    static let appSuite = UserDefaults(suiteName: "swiftfinApp")!
+    static let appSuite = UserDefaults(suiteName: AppStorageIdentity.appOwnerID)!
 
     // MARK: User
 
@@ -39,7 +39,7 @@ extension UserDefaults {
     }
 
     static func userSuite(id: String) -> UserDefaults {
-        UserDefaults(suiteName: id)!
+        UserDefaults(suiteName: AppStorageIdentity.userSuiteName(for: id))!
     }
 }
 
@@ -434,7 +434,7 @@ extension Defaults.Keys {
 
 extension UserDefaults {
 
-    static let debugSuite = UserDefaults(suiteName: "swiftfinstore-debug-defaults")!
+    static let debugSuite = UserDefaults(suiteName: AppStorageIdentity.debugSuiteName)!
 }
 
 extension Defaults.Keys {

@@ -27,7 +27,7 @@ jobs:
       matrix:
         scheme:
           - "Swiftfin"
-          - "Swiftfin tvOS"
+          - "SharkParty tvOS"
 
     runs-on: macos-26
 

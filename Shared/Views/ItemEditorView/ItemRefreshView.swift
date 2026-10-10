@@ -75,7 +75,7 @@ struct ItemRefreshView: View {
             } header: {
                 Text(L10n.refreshMode)
             } footer: {
-                Text(L10n.metadataRefreshDescription)
+                Text(AppBrandCopy.metadataRefreshDescription)
             }
 
             if refreshType != .scan {

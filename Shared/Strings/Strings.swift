@@ -1626,6 +1626,28 @@ internal enum L10n {
   internal static let setPinHintDescription = L10n.tr("Localizable", "setPinHintDescription", fallback: "Set a hint when prompting for the pin.")
   /// Settings
   internal static let settings = L10n.tr("Localizable", "settings", fallback: "Settings")
+  /// Additional security for people signed in on this device. Server account settings are unchanged. - SharkParty tvOS copy. Other locales use the English fallback until translated.
+  internal static let sharkPartyAdditionalSecurityAccessDescription = L10n.tr("Localizable", "sharkPartyAdditionalSecurityAccessDescription", fallback: "Additional security for people signed in on this device. Server account settings are unchanged.")
+  /// Connect to a media server to get started
+  internal static let sharkPartyConnectIntro = L10n.tr("Localizable", "sharkPartyConnectIntro", fallback: "Connect to a media server to get started")
+  /// Custom device profiles will be added to SharkParty's default profiles.
+  internal static let sharkPartyCustomDeviceProfileAdd = L10n.tr("Localizable", "sharkPartyCustomDeviceProfileAdd", fallback: "Custom device profiles will be added to SharkParty\'s default profiles.")
+  /// Custom device profiles will replace SharkParty's default profiles.
+  internal static let sharkPartyCustomDeviceProfileReplace = L10n.tr("Localizable", "sharkPartyCustomDeviceProfileReplace", fallback: "Custom device profiles will replace SharkParty\'s default profiles.")
+  /// Metadata is refreshed using settings and internet services enabled on your server.
+  internal static let sharkPartyMetadataRefreshDescription = L10n.tr("Localizable", "sharkPartyMetadataRefreshDescription", fallback: "Metadata is refreshed using settings and internet services enabled on your server.")
+  /// Open your server's web app in a browser and sign in with your account.
+  internal static let sharkPartyQuickConnectStep1 = L10n.tr("Localizable", "sharkPartyQuickConnectStep1", fallback: "Open your server\'s web app in a browser and sign in with your account.")
+  /// Unable to confirm Jellyfin %@ compatibility for this server.
+  internal static func sharkPartyServerVersionWarning(_ p1: Any) -> String {
+    return L10n.tr("Localizable", "sharkPartyServerVersionWarning", String(describing: p1), fallback: "Unable to confirm Jellyfin %@ compatibility for this server.")
+  }
+  /// Signs out the last user after the app runs in the background without playback for a while.
+  internal static let sharkPartySignoutBackgroundFooter = L10n.tr("Localizable", "sharkPartySignoutBackgroundFooter", fallback: "Signs out the last user after the app runs in the background without playback for a while.")
+  /// Signs out the last user after the app is force closed.
+  internal static let sharkPartySignoutCloseFooter = L10n.tr("Localizable", "sharkPartySignoutCloseFooter", fallback: "Signs out the last user after the app is force closed.")
+  /// Supports Deadfin and Jellyfin servers.
+  internal static let sharkPartySupportedServers = L10n.tr("Localizable", "sharkPartySupportedServers", fallback: "Supports Deadfin and Jellyfin servers.")
   /// Short
   internal static let short = L10n.tr("Localizable", "short", fallback: "Short")
   /// Show favorited

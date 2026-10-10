@@ -41,6 +41,18 @@ func Form(
 }
 
 func Form(
+    uiImage: UIImage,
+    @ViewBuilder content: @escaping () -> some View
+) -> some View {
+    PlatformForm(content: content) {
+        Image(uiImage: uiImage)
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .frame(maxWidth: 400)
+    }
+}
+
+func Form(
     @ViewBuilder content: @escaping () -> some View,
     @ViewBuilder image: @escaping () -> some View
 ) -> some View {

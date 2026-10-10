@@ -15,7 +15,7 @@ struct AboutAppView: View {
     private var router
 
     var body: some View {
-        Form(image: .jellyfinBlobBlue) {
+        Form(uiImage: .appBrand) {
 
             #if os(iOS)
             Section {

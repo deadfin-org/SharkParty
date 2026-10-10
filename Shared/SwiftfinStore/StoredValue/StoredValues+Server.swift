@@ -49,7 +49,7 @@ extension StoredValues.Keys {
 
         static var servers: Key<[ServerState]> {
             ServerKey(
-                ownerID: "swiftfinApp",
+                ownerID: AppStorageIdentity.appOwnerID,
                 field: "servers",
                 storage: .sql,
                 default: []
