@@ -1,66 +1,179 @@
-> **SharkParty** is the Deadfin organization's tvOS fork of Swiftfin. This repository
-> starts from upstream Swiftfin commit `7d778734a9dce3e37b593c3c54f4dfb5a140e28b`.
-> See the [SharkParty development plan](Documentation/sharkparty-plan.md) for the
-> fork scope, build baseline, and first playback tests. Original Swiftfin history,
-> credits, and the [MPL-2.0 license](LICENSE.md) are retained.
-
-<div align="center">
-  <img alt="Swiftfin" src="./Resources/primary-wide.svg">
-
-  <h1>Swiftfin</h1>
-  <img src="https://img.shields.io/badge/iOS-18+-red"/>
-  <img src="https://img.shields.io/badge/tvOS-26+-red"/>
-  <img src="https://img.shields.io/badge/Jellyfin-12.0-9962be"/>
-  
-  <a href="https://translate.jellyfin.org/engage/swiftfin/">
-    <img src="https://translate.jellyfin.org/widgets/swiftfin/-/svg-badge.svg"/>
-  </a>
-  <a href="https://matrix.to/#/#jellyfin:matrix.org">
-    <img src="https://img.shields.io/matrix/jellyfin:matrix.org">
-  </a>
-  <a href="https://discord.gg/zHBxVSXdBV">
-    <img src="https://img.shields.io/badge/Talk%20on-Discord-brightgreen">
-  </a>
-</div>
-
 <p align="center">
-  <b>Swiftfin</b> is a modern video client for the <a href="https://github.com/jellyfin/jellyfin">Jellyfin</a> media server. Made using Swift to maximize direct play with the power of <b>VLC</b> and look <b>native</b> on all classes of Apple devices.
+  <img src="Design/sharkparty-logo.png" alt="SharkParty" width="128" height="128">
 </p>
 
-## ⚡️ Download
+<h1 align="center">SharkParty</h1>
 
-<a href="https://apps.apple.com/us/app/swiftfin/id1604098728">
-  <img height=75 alt="Download on the Apple App Store" src="./Resources/Download_on_the_App_Store_Badge_US-UK_RGB_blk_092917.svg"/>
-</a>
+<p align="center">
+  <strong>An Apple TV client for Deadfin and Jellyfin.</strong><br>
+  A tvOS fork of Swiftfin.
+</p>
 
-## 🛠️ TestFlight
+<p align="center">
+  <a href="LICENSE.md"><img alt="License: MPL-2.0" src="https://img.shields.io/badge/license-MPL--2.0-blue"></a>
+  <img alt="tvOS 26.1+" src="https://img.shields.io/badge/tvOS-26.1%2B-black">
+  <img alt="Jellyfin API 12.0" src="https://img.shields.io/badge/Jellyfin%20API-12.0-9962be">
+</p>
 
-Use the TestFlight version to test new features and bug fixes before being published to the App Store. We are grateful for your time and resources for reporting new bugs.
+---
 
-<a href="https://testflight.apple.com/join/SqNPfdxq">
-  <img height=75 alt="Get the beta on TestFlight" src="./Resources/testflight.svg"/>
-</a>
+SharkParty is a media client for Apple TV. It is a fork of
+[Swiftfin](https://github.com/jellyfin/Swiftfin), the Jellyfin client for iOS
+and tvOS. It speaks the Jellyfin API, so it connects to
+[Deadfin](https://github.com/deadfin-org/deadfin) and to stock Jellyfin
+servers.
 
-## 📖 Documentation
+## What it is
 
-Swiftfin provides detailed documentation to help you understand key aspects of the app and its development approach:
+- **Swiftfin for tvOS, with its own identity.** SharkParty is the Swiftfin
+  tvOS app under the name SharkParty, with bundle ID
+  `org.deadfin.SharkParty`, its own icon and top shelf art, and the
+  `sharkparty` URL scheme.
+- **Installs next to Swiftfin.** SharkParty keeps its servers, accounts,
+  settings and keychain entries apart from Swiftfin's. Both apps can be on the
+  same Apple TV. SharkParty does not import Swiftfin's saved servers or
+  accounts.
+- **Server-neutral wording.** The tvOS sign-in and settings screens name
+  Deadfin and Jellyfin as supported servers.
+- **Swiftfin's players.** Playback uses Swiftfin's two players: VLC (through
+  SwiftVLC) and Native (AVPlayer). See [players.md](Documentation/players.md)
+  for what each supports.
 
-- [🎞️ Library Support](https://github.com/jellyfin/Swiftfin/blob/main/Documentation/libraries.md) — Information on **library compatibility** and supported media types in Swiftin.
-- [🎬 Media Playback](https://github.com/jellyfin/Swiftfin/blob/main/Documentation/players.md) — Learn about Swiftfin's **Native** and **VLC** players and how their features vary.
-- [🧩 OS Version Support](https://github.com/jellyfin/Swiftfin/blob/main/Documentation/version.md) — Read about how we determine the **minimum supported OS** and which versions of iOS & tvOS are supported.
-- [🐞 Common Issues](https://github.com/jellyfin/Swiftfin/blob/main/Documentation/common_issues.md) — If you are experiencing an issue with Swiftfin, this is the best place to start.
-- [💜 Supporting Development](https://jellyfin.org/docs/general/contributing/direct-donations) — Learn how you can **support the project developers** and help keep Swiftfin improving.
+The Swiftfin iOS target is still in the project and keeps its upstream
+identity. SharkParty is the tvOS app only.
 
-## ⚙️ Development
+## Upstream base
 
-Thank you for your interest in Swiftfin! Please check out the [Contribution Guidelines](https://github.com/jellyfin/Swiftfin/blob/main/Documentation/contributing.md) to get started.
+SharkParty starts from Swiftfin `main` at commit
+[`7d778734`](https://github.com/jellyfin/Swiftfin/commit/7d778734a9dce3e37b593c3c54f4dfb5a140e28b)
+(2026-10-09). That revision is 155 commits ahead of the Swiftfin 1.6.1
+release and includes Swiftfin's newer player stack. The full Swiftfin history
+is kept in this repository.
 
-## 📚 Translations
+## Status: pre-alpha
 
-**Don't see Swiftfin in your language?**
+SharkParty is early. It builds and runs in the tvOS 27 Simulator, and
+sign-in, library browsing, artwork and movie playback work there against
+Deadfin. It has not been verified on a physical Apple TV yet.
 
-Check out our [Weblate instance](https://translate.jellyfin.org/projects/swiftfin/) to help translate Swiftfin and other Jellyfin projects.
+There are no TestFlight or App Store builds. To run it, build it from
+source.
 
-<a href="https://translate.jellyfin.org/engage/swiftfin/">
-<img src="https://translate.jellyfin.org/widgets/swiftfin/-/multi-auto.svg"/>
-</a>
+## Requirements
+
+- An Apple TV running tvOS 26.1 or later.
+- A Deadfin or Jellyfin 12.0 server.
+- To build: a Mac with Xcode 27.0 and the tvOS 27 SDK.
+
+## Build from source
+
+You need:
+
+- Xcode 27.0 with the tvOS 27.0 SDK and Simulator runtime
+- [SwiftFormat](https://github.com/nicklockwood/SwiftFormat) and
+  [SwiftLint](https://github.com/realm/SwiftLint). The Xcode build runs
+  SwiftFormat on the tree. Install both with Homebrew:
+
+  ```bash
+  brew bundle --file Brewfile
+  ```
+
+Xcode resolves the Swift packages when you open `Swiftfin.xcodeproj`. If a
+package fails to resolve, reset the package caches in Xcode
+(File → Packages → Reset Package Caches) and try again.
+
+### Simulator
+
+Open `Swiftfin.xcodeproj`, choose the **SharkParty tvOS** scheme and an Apple
+TV simulator, and run. From the command line:
+
+```bash
+xcodebuild -project Swiftfin.xcodeproj -scheme 'SharkParty tvOS' \
+  -configuration Debug -destination 'generic/platform=tvOS Simulator' \
+  CODE_SIGNING_ALLOWED=NO build
+```
+
+Pass the destination as shown. Do not add `-sdk appletvsimulator`: it builds
+the Swift macro plugin for the wrong platform.
+
+### Apple TV
+
+Installing on an Apple TV needs an Apple developer team for signing.
+
+1. Create `XcodeConfig/DevelopmentTeam.xcconfig` with your team ID. Git
+   ignores this file.
+
+   ```
+   DEVELOPMENT_TEAM = YOURTEAMID
+   ```
+
+2. In the **SharkParty tvOS** target's Signing & Capabilities, set a bundle
+   identifier that your team can register, for example
+   `com.example.SharkParty`.
+3. Pair the Apple TV with Xcode (Window → Devices and Simulators), select it
+   as the run destination, and run the **SharkParty tvOS** scheme.
+
+Apple's guide covers device pairing and signing:
+[Running your app in Simulator or on a device](https://developer.apple.com/documentation/xcode/running-your-app-in-simulator-or-on-a-device/).
+
+### Checks
+
+Before you open a pull request, run SwiftLint and the macro package tests:
+
+```bash
+swiftlint lint --strict --config .swiftlint.yml
+swift test --package-path SwiftfinMacros
+```
+
+## Documentation
+
+- [Branding and app data](Documentation/branding.md): the tvOS identity,
+  where SharkParty stores its data, and how the icons are generated.
+- [Players](Documentation/players.md) and
+  [library support](Documentation/libraries.md), from Swiftfin.
+- [Common issues](Documentation/common_issues.md), from Swiftfin.
+
+## Translations
+
+SharkParty uses Swiftfin's translations. Strings added by SharkParty are in
+English and show in English in other languages until they are translated.
+
+## Provenance
+
+SharkParty is a fork of Swiftfin with full upstream history. SharkParty's
+changes are written with AI coding agents and reviewed by its maintainer.
+Swiftfin's copyright notices and license are kept.
+
+## License
+
+SharkParty is licensed under the Mozilla Public License 2.0 (`MPL-2.0`), the
+same license as Swiftfin. See [LICENSE.md](LICENSE.md). The Swift packages it
+uses are under their own licenses.
+
+## Security
+
+Report security problems privately through
+[GitHub security advisories](https://github.com/deadfin-org/deadfin/security/advisories/new)
+on the Deadfin repository. Do not open a public issue for a security problem.
+
+## Issues and questions
+
+Report bugs and client problems in the
+[Deadfin issue tracker](https://github.com/deadfin-org/deadfin/issues). Ask
+questions in [Deadfin discussions](https://github.com/deadfin-org/deadfin/discussions).
+Include the SharkParty commit, the tvOS version and the server you use.
+
+Problems that also happen in Swiftfin belong upstream, in the
+[Swiftfin issue tracker](https://github.com/jellyfin/Swiftfin/issues).
+
+## Acknowledgements
+
+SharkParty exists because of [Swiftfin](https://github.com/jellyfin/Swiftfin)
+and its [contributors](https://github.com/jellyfin/Swiftfin/graphs/contributors),
+who built the app this fork runs on, and [Jellyfin](https://jellyfin.org),
+whose API it speaks. Thanks also to the translators on Jellyfin's
+[Weblate](https://translate.jellyfin.org/projects/swiftfin/) and the authors
+of the Swift packages Swiftfin depends on. Thank you.
+
+SharkParty is not affiliated with or endorsed by the Jellyfin or Swiftfin
+projects. Jellyfin is a trademark of its respective owners.
