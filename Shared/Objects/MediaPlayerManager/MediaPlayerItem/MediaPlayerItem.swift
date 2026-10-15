@@ -184,6 +184,11 @@ class MediaPlayerItem: ViewModel, MediaPlayerObserver {
                     || deviceProfile.canPlay(subtitleFormat: newStream.codec, method: .hls))
             }
 
+            // The server already delivers this embedded track as a separate file (the native player's overlay draws it).
+            if newStream.deliveryMethod == .external, newStream.deliveryURL != nil {
+                return !deviceProfile.canPlay(subtitleFormat: newStream.codec, method: .external)
+            }
+
             // Embedded subtitles are in the source container.
             // Only reachable while direct-playing AND when the profile supports embed delivery.
             return isTranscoding || !deviceProfile.canPlay(subtitleFormat: newStream.codec, method: .embed)
@@ -207,6 +212,17 @@ class MediaPlayerItem: ViewModel, MediaPlayerObserver {
 
         case .subtitle:
             guard let proxy = manager?.proxy as? any MediaPlayerSubtitleTrackConfigurable else { return }
+
+            if let overlay = proxy as? any MediaPlayerSubtitleOverlayCapable {
+                if let stream = subtitleStreams.first(where: { $0.index == index }), overlay.canPresentOverlaySubtitle(stream) {
+                    // The overlay draws this track; keep the player's own legible rendering off.
+                    proxy.setSubtitleStream(.init(index: -1))
+                    overlay.setOverlaySubtitleStream(stream, item: self)
+                    return
+                }
+
+                overlay.setOverlaySubtitleStream(nil, item: self)
+            }
 
             // Disable subtitles until the requested track is available.
             proxy.setSubtitleStream(.init(index: playerIndex ?? -1))

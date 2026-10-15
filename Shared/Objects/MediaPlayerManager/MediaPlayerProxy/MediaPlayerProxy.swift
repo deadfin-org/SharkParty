@@ -58,6 +58,14 @@ protocol MediaPlayerSubtitleTrackConfigurable {
     func setSubtitleStream(_ stream: MediaStream)
 }
 
+/// A player that can draw subtitles itself, above the video, for formats its engine cannot render.
+@MainActor
+protocol MediaPlayerSubtitleOverlayCapable {
+    func canPresentOverlaySubtitle(_ stream: MediaStream) -> Bool
+    /// Presents `stream` in the overlay, or stops the overlay when `nil`.
+    func setOverlaySubtitleStream(_ stream: MediaStream?, item: MediaPlayerItem)
+}
+
 @MainActor
 protocol MediaPlayerOffsetConfigurable {
     func setAudioOffset(_ seconds: Duration)

@@ -126,6 +126,11 @@ extension VideoPlayerType {
 
     // MARK: - Subtitle
 
+    /// - Note: ASS/SSA, PGS, SRT, and WebVTT are delivered as separate files and drawn by
+    ///   `AVPlayerSubtitleOverlay` above the video, so the server neither burns them in nor
+    ///   flattens ASS styling into WebVTT. External profiles are listed before HLS so the
+    ///   server prefers them; HLS WebVTT remains the fallback when a server cannot extract
+    ///   a track from a transcode.
     @ArrayBuilder<SubtitleProfile>
     static var _avPlayerSubtitleProfiles: [SubtitleProfile] {
 
@@ -134,10 +139,18 @@ extension VideoPlayerType {
             SubtitleFormat.ttml
         }
 
+        /// - Note: Text subtitles without an exact match are converted to the first text option (subrip).
+        SubtitleProfile.build(method: .external) {
+            SubtitleFormat.subrip
+            SubtitleFormat.vtt
+            SubtitleFormat.ass
+            SubtitleFormat.ssa
+            SubtitleFormat.pgssub
+        }
+
         SubtitleProfile.build(method: .encode) {
             SubtitleFormat.dvbsub
             SubtitleFormat.dvdsub
-            SubtitleFormat.pgssub
             SubtitleFormat.xsub
         }
 

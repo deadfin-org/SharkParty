@@ -16,7 +16,8 @@ import SwiftUI
 @MainActor
 class AVMediaPlayerProxy: NSObject,
     VideoMediaPlayerLayoutConfigurable,
-    MediaPlayerPictureInPictureCapable
+    MediaPlayerPictureInPictureCapable,
+    MediaPlayerSubtitleOverlayCapable
 {
     let isBuffering: PublishedBox<Bool> = .init(initialValue: false)
     let videoSize: PublishedBox<CGSize> = .init(initialValue: .zero)
@@ -31,6 +32,7 @@ class AVMediaPlayerProxy: NSObject,
 
     let avPlayerLayer: AVPlayerLayer
     let player: AVPlayer
+    let subtitleOverlay: AVPlayerSubtitleOverlay
 
     #if os(tvOS)
     weak var displayManager: AVDisplayManager? {
@@ -75,6 +77,7 @@ class AVMediaPlayerProxy: NSObject,
     override init() {
         self.player = AVPlayer()
         self.avPlayerLayer = AVPlayerLayer(player: player)
+        self.subtitleOverlay = AVPlayerSubtitleOverlay(player: player, playerLayer: avPlayerLayer)
 
         super.init()
 
@@ -158,6 +161,24 @@ class AVMediaPlayerProxy: NSObject,
         }
 
         item.select(group.options[index], in: group)
+    }
+
+    func canPresentOverlaySubtitle(_ stream: MediaStream) -> Bool {
+        AVPlayerSubtitleOverlay.canPresent(stream)
+    }
+
+    func setOverlaySubtitleStream(_ stream: MediaStream?, item: MediaPlayerItem) {
+        guard let stream else {
+            subtitleOverlay.clear()
+            return
+        }
+        guard stream.index != subtitleOverlay.streamIndex else { return }
+        guard let client = manager?.userSession?.client else {
+            manager?.logger.warning("Subtitle overlay: no user session to fetch subtitles")
+            return
+        }
+
+        subtitleOverlay.show(stream: stream, item: item, client: client)
     }
 
     private func selectionOption(
@@ -282,6 +303,7 @@ extension AVMediaPlayerProxy {
 
         removeItemObservers()
         addTimeObserver()
+        subtitleOverlay.clear()
 
         pendingSeekSeconds = nil
 
@@ -307,6 +329,7 @@ extension AVMediaPlayerProxy {
         pendingSeekSeconds = nil
 
         player.pause()
+        subtitleOverlay.clear()
 
         if let timeObserver {
             player.removeTimeObserver(timeObserver)
@@ -629,6 +652,7 @@ extension AVMediaPlayerProxy {
             self.proxy = proxy
             super.init(frame: .zero)
             layer.addSublayer(proxy.avPlayerLayer)
+            layer.addSublayer(proxy.subtitleOverlay.layer)
         }
 
         @available(*, unavailable)
@@ -639,11 +663,15 @@ extension AVMediaPlayerProxy {
         override func layoutSubviews() {
             super.layoutSubviews()
             proxy.avPlayerLayer.frame = bounds
+            proxy.subtitleOverlay.setScreenScale(traitCollection.displayScale)
+            proxy.subtitleOverlay.updateGeometry()
         }
 
         override func didMoveToWindow() {
             super.didMoveToWindow()
             guard let window else { return }
+
+            proxy.subtitleOverlay.setScreenScale(traitCollection.displayScale)
 
             Task { @MainActor [weak self] in
                 self?.proxy.setupPiP()
