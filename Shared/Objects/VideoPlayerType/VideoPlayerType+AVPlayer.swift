@@ -248,8 +248,8 @@ extension VideoPlayerType {
         if PlaybackCapabilities.supportsHDR10 || PlaybackCapabilities.supportsDolbyVision {
             VideoRangeType.doviWithHDR10
             VideoRangeType.doviWithHDR10Plus
-            VideoRangeType.doviWithEL
-            VideoRangeType.doviWithELHDR10Plus
+            // AVPlayer cannot decode Dolby Vision enhancement layers. Omitting
+            // these ranges lets the server provide the HDR10 base layer.
         }
 
         if PlaybackCapabilities.supportsDolbyVision {
