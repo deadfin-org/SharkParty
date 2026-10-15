@@ -34,6 +34,14 @@ Update the `DEVELOPMENT_TEAM` value with your Team ID. This can be found by:
 
 You can change the `PRODUCT_BUNDLE_IDENTIFIER` value to have multiple builds of Swiftfin on your devices or for provisioning purposes.
 
+The SharkParty tvOS target uses `SHARKPARTY_BUNDLE_IDENTIFIER` (default `org.deadfin.SharkParty`) instead. To sign a device build under your own team, set it in the same file:
+
+```
+SHARKPARTY_BUNDLE_IDENTIFIER = com.example.SharkParty
+```
+
+Simulator builds need neither value.
+
 `DevelopmentTeam.xcconfig` is already added to the `.gitignore`.
 
 ### Xcode Version

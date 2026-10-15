@@ -9,4 +9,8 @@
 DEVELOPMENT_TEAM = 
 PRODUCT_BUNDLE_IDENTIFIER = org.jellyfin.swiftfin
 
+// The SharkParty tvOS target reads its bundle ID from this variable, so
+// DevelopmentTeam.xcconfig can override it for a device build.
+SHARKPARTY_BUNDLE_IDENTIFIER = org.deadfin.SharkParty
+
 #include? "DevelopmentTeam.xcconfig"
