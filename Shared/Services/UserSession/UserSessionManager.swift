@@ -320,8 +320,16 @@ final class UserSessionManager: ObservableObject {
 
     /// Serialize transitions because starting and stopping session services can suspend
     @MainActor
-    private func applyCurrentSession(_ newSession: UserSession?) async {
+    func applyCurrentSession(_ newSession: UserSession?) async {
         let previousSession = currentSession
+
+        // Foreground refreshes may resolve the same stored session repeatedly.
+        // Keep its ItemStore and the view models using it alive in that case.
+        if let previousSession, let newSession,
+           previousSession.configuration == newSession.configuration
+        {
+            return
+        }
 
         await stopActivePlayback()
         previousSession?.willStop()
@@ -337,6 +345,7 @@ final class UserSessionManager: ObservableObject {
             state = .signedIn
         }
 
+        Notifications[.didChangeUserSession].post()
         newSession?.didStart()
     }
 

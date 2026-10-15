@@ -19,3 +19,17 @@ sleep 5
 xcrun simctl io "$device" screenshot "$CI_ROOT/simulator-screen.png"
 xcrun simctl spawn "$device" log show --last 2m --style compact --predicate 'process == "SharkParty"' > "$CI_ROOT/simulator.log" 2>&1 || true
 test -s "$CI_ROOT/simulator-screen.png"
+
+xcodebuild -project Swiftfin.xcodeproj -scheme 'SharkParty tvOS' \
+  -configuration Debug -destination "platform=tvOS Simulator,id=$device" \
+  -derivedDataPath "$CI_ROOT/DerivedData" \
+  -resultBundlePath "$CI_ROOT/Session-tests.xcresult" \
+  -only-testing:SharkPartySessionTests \
+  CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES test > "$CI_ROOT/session-tests.log" 2>&1 || {
+    tail -100 "$CI_ROOT/session-tests.log"
+    exit 1
+  }
+xcrun xcresulttool get test-results summary --path "$CI_ROOT/Session-tests.xcresult" \
+  | python3 -c 'import json,sys; s=json.load(sys.stdin); print("Session XCTest: {passedTests} passed, {failedTests} failed".format(**s)); assert s["totalTestCount"] == s["passedTests"] == 1 and s["failedTests"] == 0, s'
+git diff --exit-code
+test -z "$(git ls-files --others --exclude-standard)"

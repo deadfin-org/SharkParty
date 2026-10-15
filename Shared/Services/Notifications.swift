@@ -115,6 +115,10 @@ extension Notifications.Key {
         Key("didChangeServerConnection")
     }
 
+    static var didChangeUserSession: Key<Void> {
+        Key("didChangeUserSession")
+    }
+
     static var didRequestGlobalRefresh: Key<Void> {
         Key("didRequestGlobalRefresh")
     }

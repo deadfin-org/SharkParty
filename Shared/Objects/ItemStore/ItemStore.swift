@@ -42,11 +42,22 @@ final class ItemStore {
         }
     }
 
-    enum StoreError: Error {
+    enum StoreError: LocalizedError {
 
         case invalidItemID
         case invalidSession
         case itemUnavailable
+
+        var errorDescription: String? {
+            switch self {
+            case .invalidItemID:
+                "The server returned an item without an ID."
+            case .invalidSession:
+                "Your session was refreshed. Go back and reload this page."
+            case .itemUnavailable:
+                "This item is no longer available."
+            }
+        }
     }
 
     private let changeSubject = PassthroughSubject<Change, Never>()

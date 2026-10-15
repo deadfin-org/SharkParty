@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1ECD61718028B463143F4E09 /* UserSessionLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9292FF19880C90CEC476A4B7 /* UserSessionLifecycleTests.swift */; };
 		53ABFDDC267972BF00886593 /* TVServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53ABFDDB267972BF00886593 /* TVServices.framework */; };
 		62666DFD27E5014F00EC0ECD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5362E4AE267D40B5000E2F71 /* AudioToolbox.framework */; };
 		62666DFE27E5015700EC0ECD /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5362E4AA267D40AD000E2F71 /* AVFoundation.framework */; };
@@ -122,9 +123,21 @@
 		E1DC9814296DC06200982F06 /* PulseLogHandler in Frameworks */ = {isa = PBXBuildFile; productRef = E1DC9813296DC06200982F06 /* PulseLogHandler */; };
 		E1E2D7BF2E3FD936004E2E5F /* Transmission in Frameworks */ = {isa = PBXBuildFile; productRef = E1E2D7BE2E3FD936004E2E5F /* Transmission */; };
 		E1FADDF12E84B63600FB310E /* StatefulMacros in Frameworks */ = {isa = PBXBuildFile; productRef = E1FADDF02E84B63600FB310E /* StatefulMacros */; };
+		FA45A7713A618E36C0FA7CDC /* FactoryKit in Frameworks */ = {isa = PBXBuildFile; productRef = 7B7B92563740F8583087F2EB /* FactoryKit */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0696F6EAEB146F4A72305194 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5377CBE9263B596A003A4E83 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5358705F2669D21600D05A09;
+			remoteInfo = "SharkParty tvOS";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		2C9825867C04E76E876EA9A9 /* SharkPartySessionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SharkPartySessionTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		535870602669D21600D05A09 /* SharkParty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SharkParty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5362E4AA267D40AD000E2F71 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5362E4AC267D40B1000E2F71 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
@@ -173,17 +186,18 @@
 		628B95212670CABD0091AF3B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		628B95232670CABD0091AF3B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		637FCAF3287B5B2600C0A353 /* UDPBroadcast.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = UDPBroadcast.xcframework; path = Carthage/Build/UDPBroadcast.xcframework; sourceTree = "<group>"; };
+		9292FF19880C90CEC476A4B7 /* UserSessionLifecycleTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UserSessionLifecycleTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		E14561A22DFCAE51008FF700 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		E14561A22DFCAE51008FF700 /* Exceptions for "Swiftfin" folder in "Swiftfin iOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
 			);
 			target = 5377CBF0263B596A003A4E83 /* Swiftfin iOS */;
 		};
-		E14565D92DFCAE6E008FF700 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		E14565D92DFCAE6E008FF700 /* Exceptions for "Shared" folder in "SharkParty tvOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Extensions/JellyfinAPI/TaskTriggerInfoType.swift,
@@ -203,14 +217,14 @@
 			);
 			target = 5358705F2669D21600D05A09 /* SharkParty tvOS */;
 		};
-		E14567272DFCAEFD008FF700 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		E14567272DFCAEFD008FF700 /* Exceptions for "Swiftfin tvOS" folder in "SharkParty tvOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Resources/Info.plist,
 			);
 			target = 5358705F2669D21600D05A09 /* SharkParty tvOS */;
 		};
-		E1BE3EDA2FE9DAE800327990 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		E1BE3EDA2FE9DAE800327990 /* Exceptions for "XcodeConfig" folder in "Swiftfin iOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				DevelopmentTeam.xcconfig,
@@ -218,7 +232,7 @@
 			);
 			target = 5377CBF0263B596A003A4E83 /* Swiftfin iOS */;
 		};
-		E1BE3EDB2FE9DAE800327990 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+		E1BE3EDB2FE9DAE800327990 /* Exceptions for "XcodeConfig" folder in "SharkParty tvOS" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				DevelopmentTeam.xcconfig,
@@ -229,12 +243,77 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		E14560852DFCAE51008FF700 /* Swiftfin */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (E14561A22DFCAE51008FF700 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Swiftfin; sourceTree = "<group>"; };
-		E14563272DFCAE6E008FF700 /* Shared */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (E14565D92DFCAE6E008FF700 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = Shared; sourceTree = "<group>"; };
-		E14565DD2DFCAE78008FF700 /* Scripts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Scripts; sourceTree = "<group>"; };
-		E145669F2DFCAEFD008FF700 /* Swiftfin tvOS */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (E14567272DFCAEFD008FF700 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = "Swiftfin tvOS"; sourceTree = "<group>"; };
-		E1456FC82DFCB323008FF700 /* Translations */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Translations; sourceTree = "<group>"; };
-		E150B7D12DFF2E7C00DC7CF4 /* XcodeConfig */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (E1BE3EDA2FE9DAE800327990 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, E1BE3EDB2FE9DAE800327990 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = XcodeConfig; sourceTree = "<group>"; };
+		E14560852DFCAE51008FF700 /* Swiftfin */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E14561A22DFCAE51008FF700 /* Exceptions for "Swiftfin" folder in "Swiftfin iOS" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Swiftfin;
+			sourceTree = "<group>";
+		};
+		E14563272DFCAE6E008FF700 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E14565D92DFCAE6E008FF700 /* Exceptions for "Shared" folder in "SharkParty tvOS" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		E14565DD2DFCAE78008FF700 /* Scripts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Scripts;
+			sourceTree = "<group>";
+		};
+		E145669F2DFCAEFD008FF700 /* Swiftfin tvOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E14567272DFCAEFD008FF700 /* Exceptions for "Swiftfin tvOS" folder in "SharkParty tvOS" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = "Swiftfin tvOS";
+			sourceTree = "<group>";
+		};
+		E1456FC82DFCB323008FF700 /* Translations */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = Translations;
+			sourceTree = "<group>";
+		};
+		E150B7D12DFF2E7C00DC7CF4 /* XcodeConfig */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				E1BE3EDA2FE9DAE800327990 /* Exceptions for "XcodeConfig" folder in "Swiftfin iOS" target */,
+				E1BE3EDB2FE9DAE800327990 /* Exceptions for "XcodeConfig" folder in "SharkParty tvOS" target */,
+			);
+			explicitFileTypes = {
+			};
+			explicitFolders = (
+			);
+			path = XcodeConfig;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -367,6 +446,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BA79E02A88BA1A188A7EF7C0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA45A7713A618E36C0FA7CDC /* FactoryKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -381,6 +468,7 @@
 				53D5E3DB264B47EE00BADDC8 /* Frameworks */,
 				E14565DD2DFCAE78008FF700 /* Scripts */,
 				E150B7D12DFF2E7C00DC7CF4 /* XcodeConfig */,
+				771C2FFA6C4E979FBAE6E11D /* SharkPartySessionTests */,
 			);
 			sourceTree = "<group>";
 		};
@@ -389,6 +477,7 @@
 			children = (
 				5377CBF1263B596A003A4E83 /* Swiftfin.app */,
 				535870602669D21600D05A09 /* SharkParty.app */,
+				2C9825867C04E76E876EA9A9 /* SharkPartySessionTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -444,6 +533,15 @@
 				628B95232670CABD0091AF3B /* SwiftUI.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		771C2FFA6C4E979FBAE6E11D /* SharkPartySessionTests */ = {
+			isa = PBXGroup;
+			children = (
+				9292FF19880C90CEC476A4B7 /* UserSessionLifecycleTests.swift */,
+			);
+			name = SharkPartySessionTests;
+			path = Tests/SharkPartySessionTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -588,6 +686,27 @@
 			productReference = 5377CBF1263B596A003A4E83 /* Swiftfin.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D62E34E1382E7B030421E9C4 /* SharkPartySessionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 86D3354E902D01AF53990E72 /* Build configuration list for PBXNativeTarget "SharkPartySessionTests" */;
+			buildPhases = (
+				A72F1DD4CB7334A2AD21BE07 /* Sources */,
+				BA79E02A88BA1A188A7EF7C0 /* Frameworks */,
+				FC6DC1E51AFE7A0EC23E2E24 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				780B80CC8D503E9F058D0ADC /* PBXTargetDependency */,
+			);
+			name = SharkPartySessionTests;
+			packageProductDependencies = (
+				7B7B92563740F8583087F2EB /* FactoryKit */,
+			);
+			productName = SharkPartySessionTests;
+			productReference = 2C9825867C04E76E876EA9A9 /* SharkPartySessionTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -707,6 +826,7 @@
 			targets = (
 				5377CBF0263B596A003A4E83 /* Swiftfin iOS */,
 				5358705F2669D21600D05A09 /* SharkParty tvOS */,
+				D62E34E1382E7B030421E9C4 /* SharkPartySessionTests */,
 			);
 		};
 /* End PBXProject section */
@@ -720,6 +840,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5377CBEF263B596A003A4E83 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FC6DC1E51AFE7A0EC23E2E24 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -898,9 +1025,42 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A72F1DD4CB7334A2AD21BE07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1ECD61718028B463143F4E09 /* UserSessionLifecycleTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		780B80CC8D503E9F058D0ADC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "SharkParty tvOS";
+			target = 5358705F2669D21600D05A09 /* SharkParty tvOS */;
+			targetProxy = 0696F6EAEB146F4A72305194 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		4FB83251A7C8C8B2182E3E31 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.deadfin.SharkParty.SessionTests;
+				PRODUCT_NAME = SharkPartySessionTests;
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SharkParty.app/SharkParty";
+				TVOS_DEPLOYMENT_TARGET = 26.1;
+			};
+			name = Debug;
+		};
 		535870722669D21700D05A09 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReferenceAnchor = E150B7D12DFF2E7C00DC7CF4 /* XcodeConfig */;
@@ -1170,6 +1330,23 @@
 			};
 			name = Release;
 		};
+		F4ABCAED9B7CAD1D62E7231E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGNING_ALLOWED = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.deadfin.SharkParty.SessionTests;
+				PRODUCT_NAME = SharkPartySessionTests;
+				SDKROOT = appletvos;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 3;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SharkParty.app/SharkParty";
+				TVOS_DEPLOYMENT_TARGET = 26.1;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1196,6 +1373,15 @@
 			buildConfigurations = (
 				5377CC1C263B596B003A4E83 /* Debug */,
 				5377CC1D263B596B003A4E83 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		86D3354E902D01AF53990E72 /* Build configuration list for PBXNativeTarget "SharkPartySessionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4ABCAED9B7CAD1D62E7231E /* Release */,
+				4FB83251A7C8C8B2182E3E31 /* Debug */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1425,6 +1611,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		7B7B92563740F8583087F2EB /* FactoryKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E192608128D2D0DB002314B4 /* XCRemoteSwiftPackageReference "Factory" */;
+			productName = FactoryKit;
+		};
 		BD88CB412D77E6A0006BB5E3 /* TVOSPicker */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = BD88CB402D77E6A0006BB5E3 /* XCRemoteSwiftPackageReference "TVOSPicker" */;

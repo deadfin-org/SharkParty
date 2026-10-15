@@ -25,6 +25,13 @@ class ViewModel: ObservableObject {
     var cancellables = Set<AnyCancellable>()
 
     init() {
+        Notifications[.didChangeUserSession]
+            .publisher
+            .sink { [weak self] in
+                self?.$userSession.resolve(reset: .scope)
+            }
+            .store(in: &cancellables)
+
         Notifications[.didChangeServerConnection]
             .publisher
             .sink { [weak self] _ in
