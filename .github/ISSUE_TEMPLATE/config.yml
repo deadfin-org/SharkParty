@@ -1,5 +1,14 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: Jellyfin documentation
-    url:  https://jellyfin.org/docs/general/getting-help.html
-    about: Our documentation contains lots of help for common issues
+  - name: Report a bug or a client problem
+    url: https://github.com/deadfin-org/deadfin/issues/new/choose
+    about: SharkParty issues go to the Deadfin issue tracker. Give the SharkParty commit, the tvOS version, the Apple TV model or simulator, and the server and its version.
+  - name: Ask a question
+    url: https://github.com/deadfin-org/deadfin/discussions
+    about: Questions and ideas go to Deadfin discussions.
+  - name: Report a security problem
+    url: https://github.com/deadfin-org/deadfin/security/advisories/new
+    about: Report security problems privately. See SECURITY.md.
+  - name: Report a problem that also happens in Swiftfin
+    url: https://github.com/jellyfin/Swiftfin/issues
+    about: Problems in upstream Swiftfin code go to the Swiftfin issue tracker.

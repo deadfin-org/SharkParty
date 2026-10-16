@@ -1,0 +1,71 @@
+# SharkParty CI on GitHub: release tags and manual dispatch.
+# Lint, the Swift package tests, and an unsigned tvOS simulator build.
+name: ci
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  tvos:
+    name: tvOS simulator build and checks
+    runs-on: macos-26
+    timeout-minutes: 90
+    steps:
+      # actions/checkout v4.2.2. Full history: the format check diffs HEAD^.
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Select Xcode 27
+        run: |
+          set -euo pipefail
+          xcode="$(ls -d /Applications/Xcode_27*.app 2>/dev/null | sort -V | tail -1 || true)"
+          test -n "$xcode" || { echo "::error::no Xcode 27 on this runner image"; ls -d /Applications/Xcode*.app; exit 1; }
+          echo "DEVELOPER_DIR=$xcode/Contents/Developer" >> "$GITHUB_ENV"
+          DEVELOPER_DIR="$xcode/Contents/Developer" xcodebuild -version
+          DEVELOPER_DIR="$xcode/Contents/Developer" xcrun --sdk appletvsimulator --show-sdk-version
+
+      - name: Install SwiftFormat and SwiftLint
+        run: brew bundle --file Brewfile
+
+      - name: Format, lint, and strings checks
+        run: |
+          set -euo pipefail
+          SWIFTFORMAT_BIN="$(command -v swiftformat)" bash .ci/check-format.sh
+          swiftlint lint --strict --config .swiftlint.yml
+          swift Scripts/Translations/FindUnusedStrings.swift
+          git diff --exit-code
+
+      - name: Test Swift macro package
+        run: swift test --package-path SwiftfinMacros
+
+      - name: Test session restoration policy
+        run: bash .ci/test-session-configuration.sh
+
+      - name: Test SubtitleKit package
+        run: swift test --package-path SubtitleKit
+
+      - name: Build unsigned SharkParty tvOS simulator app
+        run: |
+          set -euo pipefail
+          xcodebuild -project Swiftfin.xcodeproj -scheme 'SharkParty tvOS' \
+            -configuration Debug -destination 'generic/platform=tvOS Simulator' \
+            -derivedDataPath "$RUNNER_TEMP/DerivedData" \
+            CODE_SIGNING_ALLOWED=NO ARCHS=arm64 ONLY_ACTIVE_ARCH=YES build \
+            > "$RUNNER_TEMP/xcodebuild.log" 2>&1 || {
+              tail -100 "$RUNNER_TEMP/xcodebuild.log"
+              exit 1
+            }
+          app="$RUNNER_TEMP/DerivedData/Build/Products/Debug-appletvsimulator/SharkParty.app"
+          test -d "$app"
+          test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$app/Info.plist")" = org.deadfin.SharkParty

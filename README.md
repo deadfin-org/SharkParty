@@ -125,6 +125,10 @@ swiftlint lint --strict --config .swiftlint.yml
 swift test --package-path SwiftfinMacros
 ```
 
+Each pull request runs the full checks on the project's Gitea CI, with a
+simulator launch on an Apple TV simulator. GitHub Actions runs the lint,
+the package tests and the simulator build on release tags.
+
 ## Documentation
 
 - [Branding and app data](Documentation/branding.md): the tvOS identity,
@@ -155,6 +159,7 @@ uses are under their own licenses.
 Report security problems privately through
 [GitHub security advisories](https://github.com/deadfin-org/deadfin/security/advisories/new)
 on the Deadfin repository. Do not open a public issue for a security problem.
+See [SECURITY.md](SECURITY.md).
 
 ## Issues and questions
 
