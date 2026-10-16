@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5A23F0C1D4E5F6A7B8C9D0E1 /* AVPlayerProxyLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A23F0C2D4E5F6A7B8C9D0E2 /* AVPlayerProxyLifecycleTests.swift */; };
 		1ECD61718028B463143F4E09 /* UserSessionLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9292FF19880C90CEC476A4B7 /* UserSessionLifecycleTests.swift */; };
 		53ABFDDC267972BF00886593 /* TVServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53ABFDDB267972BF00886593 /* TVServices.framework */; };
 		62666DFD27E5014F00EC0ECD /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5362E4AE267D40B5000E2F71 /* AudioToolbox.framework */; };
@@ -188,6 +189,7 @@
 		628B95212670CABD0091AF3B /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		628B95232670CABD0091AF3B /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		637FCAF3287B5B2600C0A353 /* UDPBroadcast.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = UDPBroadcast.xcframework; path = Carthage/Build/UDPBroadcast.xcframework; sourceTree = "<group>"; };
+		5A23F0C2D4E5F6A7B8C9D0E2 /* AVPlayerProxyLifecycleTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = AVPlayerProxyLifecycleTests.swift; sourceTree = "<group>"; };
 		9292FF19880C90CEC476A4B7 /* UserSessionLifecycleTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = UserSessionLifecycleTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -542,6 +544,7 @@
 		771C2FFA6C4E979FBAE6E11D /* SharkPartySessionTests */ = {
 			isa = PBXGroup;
 			children = (
+				5A23F0C2D4E5F6A7B8C9D0E2 /* AVPlayerProxyLifecycleTests.swift */,
 				9292FF19880C90CEC476A4B7 /* UserSessionLifecycleTests.swift */,
 			);
 			name = SharkPartySessionTests;
@@ -1036,6 +1039,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5A23F0C1D4E5F6A7B8C9D0E1 /* AVPlayerProxyLifecycleTests.swift in Sources */,
 				1ECD61718028B463143F4E09 /* UserSessionLifecycleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

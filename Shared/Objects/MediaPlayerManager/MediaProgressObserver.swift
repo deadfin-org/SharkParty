@@ -9,6 +9,7 @@
 import Combine
 import Defaults
 import Foundation
+import Get
 import JellyfinAPI
 
 // TODO: respond properly to end of playback
@@ -82,6 +83,7 @@ class MediaProgressObserver: ViewModel, MediaPlayerObserver {
         guard let item else { return }
 
         sendStopReport(for: item, seconds: manager?.seconds)
+        stopActiveEncodings(for: item)
     }
 
     private func playbackItemDidChange(_ newItem: MediaPlayerItem?) {
@@ -104,7 +106,7 @@ class MediaProgressObserver: ViewModel, MediaPlayerObserver {
     // TODO: respond properly to ended
     private func didReceive(action: MediaPlayerManager._Action) {
         switch action {
-        case .stop:
+        case .stop, .error:
             endPlaybackSession()
             timer.stop()
             cancellables = []
@@ -156,6 +158,26 @@ class MediaProgressObserver: ViewModel, MediaPlayerObserver {
             info.sessionID = item.playSessionID
 
             let request = Paths.reportPlaybackStopped(info)
+            try await send(request)
+        }
+    }
+
+    /// Stops the server transcode for this play session, as the Jellyfin web client does
+    /// when it stops a transcoded stream. The stop report alone can arrive after the server
+    /// has started more segments.
+    private func stopActiveEncodings(for item: MediaPlayerItem) {
+        guard item.mediaSource.transcodingURL != nil,
+              let deviceID = userSession?.client.configuration.deviceID
+        else { return }
+
+        let request = Request<Void>(
+            path: "/Videos/ActiveEncodings",
+            method: "DELETE",
+            query: [("deviceId", deviceID), ("playSessionId", item.playSessionID)],
+            id: "StopEncodingProcess"
+        )
+
+        Task {
             try await send(request)
         }
     }

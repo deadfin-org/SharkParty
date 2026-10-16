@@ -96,8 +96,10 @@ class AVMediaPlayerProxy: NSObject,
         player.pause()
     }
 
+    /// Releases the current item. The manager calls this on stop, on error, and before it
+    /// starts a new item, so a paused item never keeps buffering in mediaplaybackd.
     func stop() {
-        player.pause()
+        releaseCurrentItem()
     }
 
     func jumpForward(_ seconds: Duration) {
@@ -298,14 +300,12 @@ extension AVMediaPlayerProxy: AVPictureInPictureControllerDelegate {
 extension AVMediaPlayerProxy {
 
     func playNew(item: MediaPlayerItem) {
+        releaseCurrentItem()
+
         let playerItem = AVPlayerItem(url: item.url)
         playerItem.externalMetadata = item.baseItem.avMetadata
 
-        removeItemObservers()
         addTimeObserver()
-        subtitleOverlay.clear()
-
-        pendingSeekSeconds = nil
 
         cachedAudioStreams = item.audioStreams.filter { $0.isExternal != true }
         cachedSubtitleStreams = item.subtitleStreams.filter { $0.isExternal != true }
@@ -320,13 +320,25 @@ extension AVMediaPlayerProxy {
     }
 
     func playbackStopped() {
+        releaseCurrentItem()
+
         teardownPiP()
+        pipController = nil
 
         #if os(tvOS)
         displayManager?.preferredDisplayCriteria = nil
+        displayModeSwitchObserver?.invalidate()
+        displayModeSwitchObserver = nil
         #endif
+    }
 
+    /// Pauses, removes every observer, and detaches the current item from the player.
+    ///
+    /// A paused `AVPlayerItem` keeps its HLS segment downloads and buffers alive. Only
+    /// `replaceCurrentItem(with: nil)` makes the system player release them.
+    private func releaseCurrentItem() {
         pendingSeekSeconds = nil
+        isBuffering.value = false
 
         player.pause()
         subtitleOverlay.clear()
@@ -337,6 +349,12 @@ extension AVMediaPlayerProxy {
         }
 
         removeItemObservers()
+
+        guard let currentItem = player.currentItem else { return }
+
+        currentItem.cancelPendingSeeks()
+        currentItem.asset.cancelLoading()
+        player.replaceCurrentItem(with: nil)
     }
 
     private func addTimeObserver() {
@@ -494,12 +512,20 @@ extension AVMediaPlayerProxy {
         )
         pendingSeekSeconds = nil
 
-        cachedAudioGroup = try? await playerItem.asset.loadMediaSelectionGroup(for: .audible)
-        cachedSubtitleGroup = try? await playerItem.asset.loadMediaSelectionGroup(for: .legible)
+        let audioGroup = try? await playerItem.asset.loadMediaSelectionGroup(for: .audible)
+        let subtitleGroup = try? await playerItem.asset.loadMediaSelectionGroup(for: .legible)
+
+        // The item can be released while its media selection loads.
+        guard player.currentItem === playerItem else { return }
+
+        cachedAudioGroup = audioGroup
+        cachedSubtitleGroup = subtitleGroup
 
         #if os(tvOS)
         await updatePreferredDisplayCriteria()
         #endif
+
+        guard player.currentItem === playerItem else { return }
 
         var indexMap = MediaTrackIndexMap()
         for (streams, cachedStreams, group) in [
@@ -578,6 +604,8 @@ extension AVMediaPlayerProxy {
         else { return }
 
         let nominalFrameRate = await (try? track.load(.nominalFrameRate)) ?? 0
+
+        guard player.currentItem === playerItem else { return }
 
         displayManager.preferredDisplayCriteria = AVDisplayCriteria(
             refreshRate: nominalFrameRate,

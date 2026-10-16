@@ -82,9 +82,9 @@ class NowPlayableObserver: ViewModel, MediaPlayerObserver {
 
         Notifications[.avAudioSessionInterruption]
             .publisher
-            .sink { i in
+            .sink { [weak self] i in
                 Task { @MainActor in
-                    self.handleInterruption(type: i.0, options: i.1)
+                    self?.handleInterruption(type: i.0, options: i.1)
                 }
             }
             .store(in: &cancellables)

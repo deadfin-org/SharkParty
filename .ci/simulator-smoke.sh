@@ -30,6 +30,6 @@ xcodebuild -project Swiftfin.xcodeproj -scheme 'SharkParty tvOS' \
     exit 1
   }
 xcrun xcresulttool get test-results summary --path "$CI_ROOT/Session-tests.xcresult" \
-  | python3 -c 'import json,sys; s=json.load(sys.stdin); print("Session XCTest: {passedTests} passed, {failedTests} failed".format(**s)); assert s["totalTestCount"] == s["passedTests"] == 1 and s["failedTests"] == 0, s'
+  | python3 -c 'import json,sys; s=json.load(sys.stdin); print("Session XCTest: {passedTests} passed, {failedTests} failed".format(**s)); assert s["totalTestCount"] == s["passedTests"] == 3 and s["failedTests"] == 0, s'
 git diff --exit-code
 test -z "$(git ls-files --others --exclude-standard)"
