@@ -1,6 +1,6 @@
 # Native subtitle overlay
 
-The native (AVPlayer) player draws subtitles itself in a layer above the video, so the server no longer burns in image subtitles or flattens ASS styling into WebVTT. Tracking: SharkParty#5, item 1.
+The native (AVPlayer) player draws subtitles itself in a layer above the video, so the server no longer burns in image subtitles or flattens ASS styling into WebVTT.
 
 ## Pieces
 
@@ -44,7 +44,7 @@ Text and layout:
 
 ## Server requirements
 
-The overlay fetches `/Videos/{id}/{mediaSourceId}/Subtitles/{index}/Stream.{format}` and `/Videos/{id}/{mediaSourceId}/Attachments/{index}`. Deadfin needs deadfin/deadfin#471 for embedded ASS, any PGS and font attachments. Until then:
+The overlay fetches `/Videos/{id}/{mediaSourceId}/Subtitles/{index}/Stream.{format}` and `/Videos/{id}/{mediaSourceId}/Attachments/{index}`. Embedded ASS, PGS and font attachments need server support in Deadfin. Until then:
 
 - External SRT, VTT and ASS sidecars use the overlay, and so do embedded text tracks in direct-played MP4/MOV files, which the server converts to SRT.
 - Embedded ASS in a remux still arrives as HLS WebVTT, which AVPlayer draws natively.
