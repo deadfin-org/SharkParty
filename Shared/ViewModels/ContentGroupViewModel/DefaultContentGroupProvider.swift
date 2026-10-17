@@ -13,14 +13,12 @@ import JellyfinAPI
 
 struct DefaultContentGroupProvider: ContentGroupProvider {
 
-    @Injected(\.currentUserSession)
-    var userSession: UserSession?
-
     let displayTitle: String = L10n.home
     let id: String = "default-content-group-provider"
 
     func makeGroups(environment: Empty) async throws -> [any ContentGroup] {
-        guard let userSession else { return [] }
+        // Resolve on each load because Home can outlive a session replacement
+        guard let userSession = Container.shared.currentUserSession() else { return [] }
 
         let parameters = Paths.GetUserViewsParameters(userID: userSession.user.id)
         let userViewsPath = Paths.getUserViews(parameters: parameters)

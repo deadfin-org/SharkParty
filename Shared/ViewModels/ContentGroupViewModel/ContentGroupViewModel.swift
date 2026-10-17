@@ -58,6 +58,15 @@ final class ContentGroupViewModel<Provider: ContentGroupProvider>: ViewModel {
                 self?.scheduleGroupRebuild()
             }
             .store(in: &cancellables)
+
+        // Groups keep view models bound to the session that built them
+        Notifications[.didChangeUserSession]
+            .publisher
+            .sink { [weak self] in
+                self?.needsGroupRebuild = true
+                self?.scheduleGroupRebuild()
+            }
+            .store(in: &cancellables)
     }
 
     deinit {
@@ -65,14 +74,20 @@ final class ContentGroupViewModel<Provider: ContentGroupProvider>: ViewModel {
     }
 
     private func scheduleGroupRebuild() {
-        guard state != .refreshing, hasLoadedGroups, needsGroupRebuild, scheduledRebuild == nil else { return }
+        guard state != .refreshing, hasLoadedGroups || state == .error, needsGroupRebuild, scheduledRebuild == nil else { return }
 
         scheduledRebuild = Task { @MainActor [weak self] in
             try? await Task.sleep(for: .milliseconds(350))
             guard !Task.isCancelled, let self else { return }
 
             self.scheduledRebuild = nil
-            await self.background.refresh()
+
+            // A failed load has no content to keep on screen
+            if self.state == .error {
+                await self.refresh()
+            } else {
+                await self.background.refresh()
+            }
         }
     }
 
@@ -105,7 +120,13 @@ final class ContentGroupViewModel<Provider: ContentGroupProvider>: ViewModel {
 
         do {
             if rebuildGroups {
-                try await fullRefresh()
+                do {
+                    try await fullRefresh()
+                } catch ItemStore.StoreError.invalidSession where userSession?.items.isActive == true {
+                    // The session was replaced during the load, so build again with the new one
+                    needsGroupRebuild = false
+                    try await fullRefresh()
+                }
             } else {
                 await refreshViewModels(in: candidateGroups, inBackground: true)
                 try Task.checkCancellation()

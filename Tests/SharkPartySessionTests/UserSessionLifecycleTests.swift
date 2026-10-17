@@ -53,6 +53,68 @@ final class UserSessionLifecycleTests: XCTestCase {
         Container.shared.currentUserSession.reset()
     }
 
+    @MainActor
+    func testHomeRetriesWithReplacementSessionWhenLoadStartedOnOldSession() async {
+        let first = makeSession()
+        let second = makeSession()
+
+        let manager = UserSessionManager()
+        Container.shared.userSessionManager.register { manager }
+        Container.shared.currentUserSession.reset()
+        await manager.applyCurrentSession(first)
+
+        // The first load starts on the old session and the session changes before it completes.
+        let probe = SessionProbe()
+        probe.beforeValidate = {
+            if probe.sessions.count == 1 {
+                await manager.applyCurrentSession(second)
+            }
+        }
+        let viewModel = ContentGroupViewModel(provider: SessionProbeProvider(probe: probe))
+
+        await viewModel.refresh()
+
+        XCTAssertEqual(viewModel.state, .content)
+        XCTAssertNil(viewModel.error)
+        XCTAssertEqual(probe.sessions.map(ObjectIdentifier.init), [first, second].map(ObjectIdentifier.init))
+
+        await manager.applyCurrentSession(nil)
+        Container.shared.userSessionManager.reset()
+        Container.shared.currentUserSession.reset()
+    }
+
+    @MainActor
+    func testLoadedHomeRebuildsGroupsAfterSessionReplacement() async throws {
+        let first = makeSession()
+        let second = makeSession()
+
+        let manager = UserSessionManager()
+        Container.shared.userSessionManager.register { manager }
+        Container.shared.currentUserSession.reset()
+        await manager.applyCurrentSession(first)
+
+        let probe = SessionProbe()
+        let viewModel = ContentGroupViewModel(provider: SessionProbeProvider(probe: probe))
+        await viewModel.refresh()
+        XCTAssertEqual(viewModel.state, .content)
+
+        await manager.applyCurrentSession(second)
+
+        // The rebuild is scheduled after a short coalescing delay
+        let deadline = Date.now.addingTimeInterval(5)
+        while probe.sessions.count < 2, Date.now < deadline {
+            try await Task.sleep(for: .milliseconds(50))
+        }
+
+        XCTAssertEqual(probe.sessions.map(ObjectIdentifier.init), [first, second].map(ObjectIdentifier.init))
+        XCTAssertEqual(viewModel.state, .content)
+        XCTAssertNil(viewModel.error)
+
+        await manager.applyCurrentSession(nil)
+        Container.shared.userSessionManager.reset()
+        Container.shared.currentUserSession.reset()
+    }
+
     private func makeSession() -> UserSession {
         let serverID = UUID().uuidString
         let userID = UUID().uuidString
@@ -61,5 +123,32 @@ final class UserSessionLifecycleTests: XCTestCase {
         let user = UserState(id: userID, serverID: serverID, username: "Test")
         let configuration = UserSessionConfiguration(serverID: serverID, userID: userID, serverURL: url, accessToken: "synthetic")
         return UserSession(server: server, user: user, configuration: configuration)
+    }
+}
+
+/// Records which session each Home load used
+@MainActor
+private final class SessionProbe {
+
+    var sessions: [UserSession] = []
+    var beforeValidate: @MainActor () async -> Void = {}
+}
+
+/// Resolves the current session the same way as the Home provider
+private struct SessionProbeProvider: ContentGroupProvider {
+
+    let displayTitle = "Probe"
+    let id = "session-probe"
+    let probe: SessionProbe
+
+    @MainActor
+    func makeGroups(environment: Empty) async throws -> [any ContentGroup] {
+        guard let session = Container.shared.currentUserSession() else { return [] }
+
+        probe.sessions.append(session)
+        await probe.beforeValidate()
+        try session.items.validate()
+
+        return []
     }
 }

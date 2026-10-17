@@ -332,8 +332,11 @@ final class UserSessionManager: ObservableObject {
         }
 
         await stopActivePlayback()
-        previousSession?.willStop()
+        // Start the new session before stopping the old one. The current
+        // session's ItemStore must stay valid while willStart suspends, or
+        // views that load during the switch fail with invalidSession.
         await newSession?.willStart()
+        previousSession?.willStop()
 
         currentSession = newSession
         Container.shared.currentUserSession.reset()
